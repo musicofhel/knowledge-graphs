@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FileText, Image, Tool, GraduationCap } from "lucide-react";
+import { FileText, Image, Wrench, GraduationCap } from "lucide-react";
 
 interface TemplateSelectorProps {
   value: string;
@@ -15,7 +15,7 @@ interface TemplateSelectorProps {
 const templates = [
   { id: "article", label: "Article", icon: FileText },
   { id: "research", label: "Research", icon: GraduationCap },
-  { id: "tool", label: "Tool", icon: Tool },
+  { id: "tool", label: "Tool", icon: Wrench },
   { id: "image", label: "Image", icon: Image },
 ];
 
