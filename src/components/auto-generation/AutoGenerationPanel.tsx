@@ -8,6 +8,7 @@ import { TopicsExtractor } from "./TopicsExtractor";
 import { CategorySuggestion } from "./CategorySuggestion";
 import { RelatedContent } from "./RelatedContent";
 import { TagSuggestions } from "./TagSuggestions";
+import { MetadataExtractor } from "./MetadataExtractor";
 
 interface AutoGenerationPanelProps {
   url?: string;
@@ -21,6 +22,7 @@ export const AutoGenerationPanel = ({ url, content }: AutoGenerationPanelProps) 
         <CardTitle className="text-lg font-medium">Content Analysis</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
+        <MetadataExtractor url={url} content={content} />
         <ContentTypeDetector url={url} content={content} />
         <MetaDescription content={content} />
         <TopicsExtractor content={content} />
