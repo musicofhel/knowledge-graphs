@@ -4,7 +4,14 @@ import { GraphDisplay } from "@/components/connections/GraphDisplay";
 import { GraphControls } from "@/components/connections/GraphControls";
 import { NodePanel } from "@/components/connections/NodePanel";
 import { ConnectionDisplay } from "@/components/connections/ConnectionDisplay";
+import { ConnectionManager } from "@/components/connections/ConnectionManager";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 
 const MOCK_CONNECTIONS = [
   {
@@ -37,13 +44,26 @@ const Connections = () => {
     <div className="h-screen flex">
       {/* Main Graph Area */}
       <div className="flex-1 p-4">
-        <Card className="h-full">
-          {isLoading ? (
-            <Skeleton className="w-full h-full" />
-          ) : (
-            <GraphDisplay onNodeSelect={setSelectedNode} />
-          )}
-        </Card>
+        <Tabs defaultValue="graph">
+          <TabsList>
+            <TabsTrigger value="graph">Graph View</TabsTrigger>
+            <TabsTrigger value="manage">Manage Connections</TabsTrigger>
+          </TabsList>
+          <TabsContent value="graph">
+            <Card className="h-[calc(100vh-8rem)]">
+              {isLoading ? (
+                <Skeleton className="w-full h-full" />
+              ) : (
+                <GraphDisplay onNodeSelect={setSelectedNode} />
+              )}
+            </Card>
+          </TabsContent>
+          <TabsContent value="manage">
+            <Card className="h-[calc(100vh-8rem)] overflow-auto">
+              <ConnectionManager />
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Controls and Details Panel */}
