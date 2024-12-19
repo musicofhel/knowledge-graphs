@@ -17,6 +17,8 @@ const MOCK_ITEMS = [
       publishDate: "March 1, 2024",
       readTime: "15 min",
     },
+    createdAt: "2024-03-01",
+    views: 156,
   },
   {
     id: 2,
@@ -34,6 +36,8 @@ const MOCK_ITEMS = [
       publishDate: "February 28, 2024",
       readTime: "25 min",
     },
+    createdAt: "2024-02-28",
+    views: 342,
   },
   {
     id: 3,
@@ -51,6 +55,8 @@ const MOCK_ITEMS = [
       publishDate: "March 5, 2024",
       readTime: "20 min",
     },
+    createdAt: "2024-03-05",
+    views: 89,
   },
 ];
 
@@ -70,17 +76,7 @@ export const ContentGrid = ({ viewMode }: ContentGridProps) => {
       {MOCK_ITEMS.map((item) => (
         <ContentCard
           key={item.id}
-          title={item.title}
-          url={item.url}
-          imageUrl={item.imageUrl}
-          tags={item.tags}
-          strength={item.strength}
-          template={item.template}
-          updatedAt={item.updatedAt}
-          readProgress={item.readProgress}
-          lastAccessed={item.lastAccessed}
-          relatedCount={item.relatedCount}
-          metadata={item.metadata}
+          {...item}
         />
       ))}
     </div>
