@@ -8,6 +8,7 @@ import { FolderStructure } from "@/components/organization/FolderStructure";
 import { SmartCollections } from "@/components/organization/SmartCollections";
 import { ViewOptions } from "@/components/visualization/ViewOptions";
 import { ContentClusters } from "@/components/visualization/ContentClusters";
+import { SystemStatusPanel } from "@/components/system/SystemStatusPanel";
 import { useState } from "react";
 
 const Dashboard = () => {
@@ -55,6 +56,7 @@ const Dashboard = () => {
             <h3 className="font-medium ml-2">Smart Collections</h3>
             <SmartCollections />
           </div>
+          <SystemStatusPanel />
         </div>
         <div className="lg:col-span-6">
           <div className="mb-4">
