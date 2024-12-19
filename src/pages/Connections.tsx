@@ -21,6 +21,14 @@ const MOCK_CONNECTIONS = [
     connectionType: "reference",
     strength: 85,
     createdAt: "2 days ago",
+    usageContext: {
+      device: "desktop",
+      timeContext: "Working hours",
+      location: "Office",
+      purpose: "Learning",
+      project: "Frontend Training",
+      workflow: "Documentation",
+    },
   },
   {
     id: 2,
@@ -29,6 +37,14 @@ const MOCK_CONNECTIONS = [
     connectionType: "related",
     strength: 92,
     createdAt: "1 week ago",
+    usageContext: {
+      device: "mobile",
+      timeContext: "Evening",
+      location: "Remote",
+      purpose: "Reference",
+      project: "Code Review",
+      workflow: "Development",
+    },
   },
 ];
 
@@ -64,15 +80,13 @@ const Connections = () => {
           </TabsContent>
           <TabsContent value="manage">
             <Card className="h-[calc(100vh-8rem)] overflow-auto">
-              <ConnectionDisplay
-                id={1}
-                sourceTitle="Example Source"
-                targetTitle="Example Target"
-                connectionType="reference"
-                strength={75}
-                createdAt="1 day ago"
-                onToggle={() => {}}
-              />
+              {MOCK_CONNECTIONS.map((connection) => (
+                <ConnectionDisplay
+                  key={connection.id}
+                  {...connection}
+                  onToggle={(enabled) => handleConnectionToggle(connection.id, enabled)}
+                />
+              ))}
             </Card>
           </TabsContent>
           <TabsContent value="patterns">

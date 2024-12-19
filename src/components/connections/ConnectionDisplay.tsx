@@ -3,9 +3,10 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { CalendarDays, Link as LinkIcon } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
+import { UsageContext } from "./UsageContext";
 
 interface ConnectionDisplayProps {
-  id: number;  // Added this line to fix the TypeScript error
+  id: number;
   sourceTitle: string;
   targetTitle: string;
   connectionType: string;
@@ -13,10 +14,18 @@ interface ConnectionDisplayProps {
   createdAt: string;
   enabled?: boolean;
   onToggle?: (enabled: boolean) => void;
+  usageContext?: {
+    device: "mobile" | "desktop" | "tablet";
+    timeContext: string;
+    location?: string;
+    purpose?: string;
+    project?: string;
+    workflow?: string;
+  };
 }
 
 export const ConnectionDisplay = ({
-  id,  // Added this to the destructuring
+  id,
   sourceTitle,
   targetTitle,
   connectionType,
@@ -24,6 +33,7 @@ export const ConnectionDisplay = ({
   createdAt,
   enabled = true,
   onToggle,
+  usageContext,
 }: ConnectionDisplayProps) => {
   const getConnectionTypeColor = (type: string) => {
     switch (type.toLowerCase()) {
@@ -78,6 +88,12 @@ export const ConnectionDisplay = ({
             </div>
             <Progress value={strength} className="h-2" />
           </div>
+
+          {usageContext && (
+            <div className="pt-2 border-t">
+              <UsageContext {...usageContext} />
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
