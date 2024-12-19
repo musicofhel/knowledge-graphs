@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Tool, Settings, Search, Link } from "lucide-react";
+import { Settings, Search, Link } from "lucide-react";
 
 interface ToolUsage {
   name: string;
@@ -26,7 +26,7 @@ export const ToolUsageTracker = () => {
           <div key={index} className="space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Tool className="h-4 w-4" />
+                <Settings className="h-4 w-4" />
                 <span className="text-sm font-medium">{tool.name}</span>
               </div>
               <Badge variant="secondary">{tool.lastUsed}</Badge>
