@@ -5,18 +5,41 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FileText, FolderOpen, RefreshCw, X } from "lucide-react";
+import { 
+  FileText, 
+  FolderOpen, 
+  RefreshCw, 
+  X, 
+  AlertCircle,
+  CheckCircle2,
+  Clock,
+  RotateCcw 
+} from "lucide-react";
 import { toast } from "sonner";
 
+interface FileStatus {
+  id: string;
+  name: string;
+  status: 'queued' | 'processing' | 'success' | 'error';
+  progress: number;
+  errorMessage?: string;
+}
+
 export const IntelligentFilingZone = () => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<FileStatus[]>([]);
   const [processingStatus, setProcessingStatus] = useState<number>(0);
   const [suggestedLocation, setSuggestedLocation] = useState<string>("/documents/unprocessed");
 
   const onDrop = async (acceptedFiles: File[]) => {
     console.log("Files dropped:", acceptedFiles);
-    setFiles(acceptedFiles);
-    simulateProcessing();
+    const newFiles = acceptedFiles.map(file => ({
+      id: Math.random().toString(36).substr(2, 9),
+      name: file.name,
+      status: 'queued' as const,
+      progress: 0
+    }));
+    setFiles(prev => [...prev, ...newFiles]);
+    processFiles(newFiles);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -28,28 +51,91 @@ export const IntelligentFilingZone = () => {
     },
   });
 
-  const simulateProcessing = () => {
-    setProcessingStatus(0);
-    const interval = setInterval(() => {
-      setProcessingStatus((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          toast.success("Files processed successfully!");
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 500);
+  const processFiles = async (filesToProcess: FileStatus[]) => {
+    for (const file of filesToProcess) {
+      // Update status to processing
+      setFiles(prev => prev.map(f => 
+        f.id === file.id ? { ...f, status: 'processing' as const } : f
+      ));
+
+      try {
+        // Simulate processing with progress updates
+        await simulateFileProcessing(file.id);
+        
+        // Update status to success
+        setFiles(prev => prev.map(f => 
+          f.id === file.id ? { ...f, status: 'success' as const, progress: 100 } : f
+        ));
+        toast.success(`Successfully processed ${file.name}`);
+      } catch (error) {
+        // Update status to error
+        setFiles(prev => prev.map(f => 
+          f.id === file.id ? { 
+            ...f, 
+            status: 'error' as const, 
+            errorMessage: error instanceof Error ? error.message : 'Unknown error'
+          } : f
+        ));
+        toast.error(`Failed to process ${file.name}`);
+      }
+    }
   };
 
-  const removeFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
+  const simulateFileProcessing = async (fileId: string) => {
+    return new Promise<void>((resolve, reject) => {
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 10;
+        setFiles(prev => prev.map(f => 
+          f.id === fileId ? { ...f, progress } : f
+        ));
+        
+        if (progress >= 100) {
+          clearInterval(interval);
+          // Simulate random success/failure
+          if (Math.random() > 0.2) {
+            resolve();
+          } else {
+            reject(new Error("Processing failed"));
+          }
+        }
+      }, 500);
+    });
+  };
+
+  const retryFile = (fileId: string) => {
+    const fileToRetry = files.find(f => f.id === fileId);
+    if (fileToRetry) {
+      processFiles([{ ...fileToRetry, status: 'queued', progress: 0 }]);
+    }
+  };
+
+  const removeFile = (fileId: string) => {
+    setFiles(prev => prev.filter(f => f.id !== fileId));
     toast.info("File removed from queue");
   };
 
-  const overrideLocation = (newLocation: string) => {
-    setSuggestedLocation(newLocation);
-    toast.info(`Location updated to: ${newLocation}`);
+  const getStatusIcon = (status: FileStatus['status']) => {
+    switch (status) {
+      case 'queued':
+        return <Clock className="h-4 w-4 text-muted-foreground" />;
+      case 'processing':
+        return <RefreshCw className="h-4 w-4 text-blue-500 animate-spin" />;
+      case 'success':
+        return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+      case 'error':
+        return <AlertCircle className="h-4 w-4 text-red-500" />;
+    }
+  };
+
+  const getStatusBadge = (status: FileStatus['status']) => {
+    const variants: Record<FileStatus['status'], string> = {
+      queued: 'bg-gray-100 text-gray-800',
+      processing: 'bg-blue-100 text-blue-800',
+      success: 'bg-green-100 text-green-800',
+      error: 'bg-red-100 text-red-800'
+    };
+    return variants[status];
   };
 
   return (
@@ -82,38 +168,61 @@ export const IntelligentFilingZone = () => {
           )}
         </div>
 
-        {/* Processing Status */}
+        {/* Processing Queue */}
         {files.length > 0 && (
           <div className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm text-muted-foreground">
-                <span>Processing Status</span>
-                <span>{processingStatus}%</span>
-              </div>
-              <Progress value={processingStatus} className="h-2" />
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium">Processing Queue</h3>
+              <Badge variant="secondary">
+                {files.filter(f => f.status === 'queued' || f.status === 'processing').length} pending
+              </Badge>
             </div>
 
-            {/* File Preview */}
-            <ScrollArea className="h-[200px] w-full rounded-md border p-4">
-              <div className="space-y-2">
-                {files.map((file, index) => (
+            <ScrollArea className="h-[300px] w-full rounded-md border p-4">
+              <div className="space-y-3">
+                {files.map((file) => (
                   <div
-                    key={index}
-                    className="flex items-center justify-between p-2 bg-muted rounded-md"
+                    key={file.id}
+                    className="flex items-center justify-between p-3 bg-muted/50 rounded-md"
                   >
-                    <div className="flex items-center gap-2">
-                      <FileText className="h-4 w-4" />
-                      <span className="text-sm truncate max-w-[200px]">
-                        {file.name}
-                      </span>
+                    <div className="flex items-center gap-3 flex-1">
+                      {getStatusIcon(file.status)}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">{file.name}</p>
+                        <div className="mt-1">
+                          <Progress value={file.progress} className="h-1" />
+                        </div>
+                        {file.errorMessage && (
+                          <p className="text-xs text-red-500 mt-1">{file.errorMessage}</p>
+                        )}
+                      </div>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => removeFile(index)}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
+                    
+                    <div className="flex items-center gap-2 ml-4">
+                      <Badge className={getStatusBadge(file.status)}>
+                        {file.status}
+                      </Badge>
+                      
+                      {file.status === 'error' && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => retryFile(file.id)}
+                          className="h-8 w-8"
+                        >
+                          <RotateCcw className="h-4 w-4" />
+                        </Button>
+                      )}
+                      
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => removeFile(file.id)}
+                        className="h-8 w-8"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -121,7 +230,7 @@ export const IntelligentFilingZone = () => {
 
             {/* Suggested Location */}
             <div className="space-y-2">
-              <label className="text-sm font-medium">Suggested Location:</label>
+              <label className="text-sm font-medium">Target Location:</label>
               <div className="flex items-center gap-2">
                 <Badge variant="secondary" className="flex items-center gap-1">
                   <FolderOpen className="h-3 w-3" />
@@ -130,7 +239,10 @@ export const IntelligentFilingZone = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => overrideLocation("/documents/manual")}
+                  onClick={() => {
+                    setSuggestedLocation("/documents/manual");
+                    toast.info("Location updated");
+                  }}
                 >
                   <RefreshCw className="h-4 w-4" />
                 </Button>
@@ -142,21 +254,30 @@ export const IntelligentFilingZone = () => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => overrideLocation("/documents/important")}
+                onClick={() => {
+                  setSuggestedLocation("/documents/important");
+                  toast.info("Marked as important");
+                }}
               >
                 Mark Important
               </Button>
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => overrideLocation("/documents/archive")}
+                onClick={() => {
+                  setSuggestedLocation("/documents/archive");
+                  toast.info("Moved to archive");
+                }}
               >
                 Move to Archive
               </Button>
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => overrideLocation("/documents/review")}
+                onClick={() => {
+                  setSuggestedLocation("/documents/review");
+                  toast.info("Marked for review");
+                }}
               >
                 Need Review
               </Button>
