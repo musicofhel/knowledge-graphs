@@ -14,6 +14,7 @@ import { SystemLearningPanel } from "@/components/system/SystemLearningPanel";
 import { ContentInteractionPanel } from "@/components/content/ContentInteractionPanel";
 import { OriginTracker } from "@/components/tracking/OriginTracker";
 import { KnowledgeFlowPanel } from "@/components/knowledge/KnowledgeFlowPanel";
+import { UsageAnalytics } from "@/components/analytics/UsageAnalytics";
 
 const mockHistoryData = [
   { date: '2024-01', strength: 65 },
@@ -31,7 +32,7 @@ const Index = () => {
             contentId="mock-content-1"
             title="Sample Content"
           />
-          <KnowledgeFlowPanel />
+          <UsageAnalytics />
         </div>
         
         <div className="grid gap-6 md:grid-cols-2">
