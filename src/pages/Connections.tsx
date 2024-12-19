@@ -22,7 +22,7 @@ const MOCK_CONNECTIONS = [
     strength: 85,
     createdAt: "2 days ago",
     usageContext: {
-      device: "desktop",
+      device: "desktop" as const,
       timeContext: "Working hours",
       location: "Office",
       purpose: "Learning",
@@ -38,7 +38,7 @@ const MOCK_CONNECTIONS = [
     strength: 92,
     createdAt: "1 week ago",
     usageContext: {
-      device: "mobile",
+      device: "mobile" as const,
       timeContext: "Evening",
       location: "Remote",
       purpose: "Reference",

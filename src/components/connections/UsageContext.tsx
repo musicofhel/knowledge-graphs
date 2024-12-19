@@ -1,5 +1,10 @@
 import { Badge } from "@/components/ui/badge";
-import { Tooltip } from "@/components/ui/tooltip";
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger 
+} from "@/components/ui/tooltip";
 import {
   Laptop,
   Smartphone,
@@ -40,54 +45,84 @@ export const UsageContext = ({
 
   return (
     <div className="flex flex-wrap gap-2">
-      <Tooltip content={`Accessed via ${device}`}>
-        <Badge variant="outline" className="flex items-center gap-1">
-          {getDeviceIcon()}
-          <span className="capitalize">{device}</span>
-        </Badge>
-      </Tooltip>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Badge variant="outline" className="flex items-center gap-1">
+              {getDeviceIcon()}
+              <span className="capitalize">{device}</span>
+            </Badge>
+          </TooltipTrigger>
+          <TooltipContent>Accessed via {device}</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
-      <Tooltip content="Time context">
-        <Badge variant="outline" className="flex items-center gap-1">
-          <Clock className="h-4 w-4" />
-          {timeContext}
-        </Badge>
-      </Tooltip>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Badge variant="outline" className="flex items-center gap-1">
+              <Clock className="h-4 w-4" />
+              {timeContext}
+            </Badge>
+          </TooltipTrigger>
+          <TooltipContent>Time context</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
       {location && (
-        <Tooltip content="Access location">
-          <Badge variant="outline" className="flex items-center gap-1">
-            <MapPin className="h-4 w-4" />
-            {location}
-          </Badge>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Badge variant="outline" className="flex items-center gap-1">
+                <MapPin className="h-4 w-4" />
+                {location}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>Access location</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
 
       {purpose && (
-        <Tooltip content="Session purpose">
-          <Badge variant="outline" className="flex items-center gap-1">
-            <Tags className="h-4 w-4" />
-            {purpose}
-          </Badge>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Badge variant="outline" className="flex items-center gap-1">
+                <Tags className="h-4 w-4" />
+                {purpose}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>Session purpose</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
 
       {project && (
-        <Tooltip content="Associated project">
-          <Badge variant="outline" className="flex items-center gap-1">
-            <Briefcase className="h-4 w-4" />
-            {project}
-          </Badge>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Badge variant="outline" className="flex items-center gap-1">
+                <Briefcase className="h-4 w-4" />
+                {project}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>Associated project</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
 
       {workflow && (
-        <Tooltip content="Workflow context">
-          <Badge variant="outline" className="flex items-center gap-1">
-            <GitBranch className="h-4 w-4" />
-            {workflow}
-          </Badge>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Badge variant="outline" className="flex items-center gap-1">
+                <GitBranch className="h-4 w-4" />
+                {workflow}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>Workflow context</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
     </div>
   );
