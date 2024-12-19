@@ -10,6 +10,7 @@ import { VisualizationPanel } from "@/components/visualization/VisualizationPane
 import { TaskQueueInterface } from "@/components/queue/TaskQueueInterface";
 import { LanguageProcessingDisplay } from "@/components/analysis/LanguageProcessingDisplay";
 import { ContentEvolution } from "@/components/content/ContentEvolution";
+import { SystemLearningPanel } from "@/components/system/SystemLearningPanel";
 
 // Mock data for demonstration
 const mockHistoryData = [
@@ -36,17 +37,8 @@ const Index = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>System Overview</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-6 md:grid-cols-2">
-                <SystemStatusPanel />
-                <SystemIntegrationPanel />
-              </div>
-            </CardContent>
-          </Card>
+          <SystemLearningPanel />
+          <SystemStatusPanel />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
