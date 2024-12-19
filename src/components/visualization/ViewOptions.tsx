@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Grid, List, Network, Timeline, Group } from "lucide-react";
+import { Grid, List, Network, ArrowDown, Group } from "lucide-react";
 import { toast } from "sonner";
 
 interface ViewOptionsProps {
@@ -34,7 +34,7 @@ export const ViewOptions = ({ currentView, onViewChange }: ViewOptionsProps) => 
           Relations
         </TabsTrigger>
         <TabsTrigger value="timeline" className="flex items-center gap-2">
-          <Timeline className="h-4 w-4" />
+          <ArrowDown className="h-4 w-4" />
           Timeline
         </TabsTrigger>
       </TabsList>
