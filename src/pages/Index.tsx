@@ -4,6 +4,7 @@ import { FileSystemMonitor } from "@/components/monitoring/FileSystemMonitor";
 import { FileHandlingRules } from "@/components/rules/FileHandlingRules";
 import { SystemConfigPanel } from "@/components/system/SystemConfigPanel";
 import { ProcessingControls } from "@/components/processing/ProcessingControls";
+import { SystemIntegrationPanel } from "@/components/system/SystemIntegrationPanel";
 
 const Index = () => {
   return (
@@ -23,10 +24,13 @@ const Index = () => {
 
         <div className="grid gap-6 md:grid-cols-2">
           <FileSystemMonitor />
-          <FileHandlingRules />
+          <SystemIntegrationPanel />
         </div>
 
-        <SystemConfigPanel />
+        <div className="grid gap-6 md:grid-cols-2">
+          <FileHandlingRules />
+          <SystemConfigPanel />
+        </div>
       </div>
     </div>
   );
