@@ -2,8 +2,25 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Link as LinkIcon, Edit, Trash, Share, Bookmark, Eye } from "lucide-react";
+import { 
+  CalendarDays, 
+  Link as LinkIcon, 
+  Edit, 
+  Trash, 
+  Share, 
+  Bookmark,
+  Eye,
+  BookmarkPlus,
+  MoreHorizontal
+} from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface ContentCardProps {
   title: string;
@@ -37,6 +54,18 @@ export const ContentCard = ({
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
     }
+  };
+
+  const handleBookmark = () => {
+    toast.success("Content saved to bookmarks");
+  };
+
+  const handleShare = () => {
+    toast.success("Share link copied to clipboard");
+  };
+
+  const handleDelete = () => {
+    toast.error("Content deleted");
   };
 
   return (
@@ -108,18 +137,36 @@ export const ContentCard = ({
           <span>Updated {updatedAt}</span>
         </div>
         <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button variant="ghost" size="icon" className="h-8 w-8">
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => toast.success("Edit mode enabled")}>
             <Edit className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8">
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleShare}>
             <Share className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <Bookmark className="h-4 w-4" />
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleBookmark}>
+            <BookmarkPlus className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive">
-            <Trash className="h-4 w-4" />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleBookmark}>
+                <Bookmark className="mr-2 h-4 w-4" />
+                Save to Collection
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleShare}>
+                <Share className="mr-2 h-4 w-4" />
+                Share Link
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleDelete} className="text-destructive">
+                <Trash className="mr-2 h-4 w-4" />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </CardFooter>
     </Card>
