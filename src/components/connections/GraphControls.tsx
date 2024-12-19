@@ -14,9 +14,9 @@ import {
   SlidersHorizontal,
   Filter,
   ArrowRight,
-  GraphLine,
+  LineChart,
 } from "lucide-react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart as RechartsLineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Mock data for the strength trend graph
 const trendData = [
@@ -89,11 +89,11 @@ export const GraphControls = () => {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label>Strength Trend</Label>
-          <GraphLine className="h-4 w-4 text-muted-foreground" />
+          <LineChart className="h-4 w-4 text-muted-foreground" />
         </div>
         <div className="h-32 mt-2">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={trendData}>
+            <RechartsLineChart data={trendData}>
               <XAxis 
                 dataKey="date" 
                 tick={{ fontSize: 12 }} 
@@ -113,7 +113,7 @@ export const GraphControls = () => {
                 strokeWidth={2} 
                 dot={false}
               />
-            </LineChart>
+            </RechartsLineChart>
           </ResponsiveContainer>
         </div>
       </div>
