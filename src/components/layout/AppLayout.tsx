@@ -87,7 +87,7 @@ export const AppLayout = () => {
               {/* Breadcrumbs */}
               <Breadcrumb>
                 <BreadcrumbItem>
-                  <BreadcrumbLink as={Link} to="/">Home</BreadcrumbLink>
+                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbItem>
                   <BreadcrumbLink href="#">Current Page</BreadcrumbLink>

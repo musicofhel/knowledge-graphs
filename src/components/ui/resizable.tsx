@@ -40,4 +40,10 @@ const ResizableHandle = ({
   </ResizablePrimitive.PanelResizeHandle>
 )
 
-export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
+// Export ResizablePanelGroup as both names for compatibility
+export { 
+  ResizablePanelGroup,
+  ResizablePanelGroup as ResizableGroup,
+  ResizablePanel, 
+  ResizableHandle 
+}
