@@ -7,6 +7,7 @@ import { ProcessingControls } from "@/components/processing/ProcessingControls";
 import { SystemIntegrationPanel } from "@/components/system/SystemIntegrationPanel";
 import { ConnectionStrengthVisual } from "@/components/connections/ConnectionStrengthVisual";
 import { VisualizationPanel } from "@/components/visualization/VisualizationPanel";
+import { TaskQueueInterface } from "@/components/queue/TaskQueueInterface";
 
 // Mock data for demonstration
 const mockHistoryData = [
@@ -20,8 +21,12 @@ const Index = () => {
   return (
     <div className="container mx-auto py-8">
       <div className="grid gap-6">
-        {/* Add Visualization Panel at the top */}
         <VisualizationPanel />
+        
+        <div className="grid gap-6 md:grid-cols-2">
+          <TaskQueueInterface />
+          <ProcessingControls />
+        </div>
 
         <Card>
           <CardHeader>
@@ -30,44 +35,42 @@ const Index = () => {
           <CardContent>
             <div className="grid gap-6 md:grid-cols-2">
               <SystemStatusPanel />
-              <ProcessingControls />
+              <SystemIntegrationPanel />
             </div>
           </CardContent>
         </Card>
 
         <div className="grid gap-6 md:grid-cols-2">
           <FileSystemMonitor />
-          <SystemIntegrationPanel />
+          <FileHandlingRules />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <FileHandlingRules />
           <SystemConfigPanel />
+          <Card>
+            <CardHeader>
+              <CardTitle>Connection Analysis</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-6 md:grid-cols-2">
+                <ConnectionStrengthVisual
+                  connectionType="reference"
+                  strength={85}
+                  createdAt="2024-03-01"
+                  updateFrequency={5}
+                  historyData={mockHistoryData}
+                />
+                <ConnectionStrengthVisual
+                  connectionType="related"
+                  strength={62}
+                  createdAt="2024-02-15"
+                  updateFrequency={3}
+                  historyData={mockHistoryData}
+                />
+              </div>
+            </CardContent>
+          </Card>
         </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Connection Analysis</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-6 md:grid-cols-2">
-              <ConnectionStrengthVisual
-                connectionType="reference"
-                strength={85}
-                createdAt="2024-03-01"
-                updateFrequency={5}
-                historyData={mockHistoryData}
-              />
-              <ConnectionStrengthVisual
-                connectionType="related"
-                strength={62}
-                createdAt="2024-02-15"
-                updateFrequency={3}
-                historyData={mockHistoryData}
-              />
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
