@@ -8,6 +8,7 @@ import { SystemIntegrationPanel } from "@/components/system/SystemIntegrationPan
 import { ConnectionStrengthVisual } from "@/components/connections/ConnectionStrengthVisual";
 import { VisualizationPanel } from "@/components/visualization/VisualizationPanel";
 import { TaskQueueInterface } from "@/components/queue/TaskQueueInterface";
+import { LanguageProcessingDisplay } from "@/components/analysis/LanguageProcessingDisplay";
 
 // Mock data for demonstration
 const mockHistoryData = [
@@ -28,17 +29,20 @@ const Index = () => {
           <ProcessingControls />
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>System Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-6 md:grid-cols-2">
-              <SystemStatusPanel />
-              <SystemIntegrationPanel />
-            </div>
-          </CardContent>
-        </Card>
+        <div className="grid gap-6 md:grid-cols-2">
+          <LanguageProcessingDisplay />
+          <Card>
+            <CardHeader>
+              <CardTitle>System Overview</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-6 md:grid-cols-2">
+                <SystemStatusPanel />
+                <SystemIntegrationPanel />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           <FileSystemMonitor />
