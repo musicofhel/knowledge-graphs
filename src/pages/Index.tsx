@@ -13,8 +13,8 @@ import { ContentEvolution } from "@/components/content/ContentEvolution";
 import { SystemLearningPanel } from "@/components/system/SystemLearningPanel";
 import { ContentInteractionPanel } from "@/components/content/ContentInteractionPanel";
 import { OriginTracker } from "@/components/tracking/OriginTracker";
+import { KnowledgeFlowPanel } from "@/components/knowledge/KnowledgeFlowPanel";
 
-// Mock data for demonstration
 const mockHistoryData = [
   { date: '2024-01', strength: 65 },
   { date: '2024-02', strength: 72 },
@@ -31,7 +31,7 @@ const Index = () => {
             contentId="mock-content-1"
             title="Sample Content"
           />
-          <VisualizationPanel />
+          <KnowledgeFlowPanel />
         </div>
         
         <div className="grid gap-6 md:grid-cols-2">
