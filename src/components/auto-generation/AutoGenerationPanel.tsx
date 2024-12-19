@@ -4,7 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
-import { FileText, Hash, Link as LinkIcon, Brain, AlertCircle } from "lucide-react";
+import { FileText, Hash, Link as LinkIcon, Brain, AlertCircle, CheckCircle2, BarChart2 } from "lucide-react";
 import { useState } from "react";
 import { ContentTypeDetector } from "./ContentTypeDetector";
 import { MetaDescription } from "./MetaDescription";
@@ -27,6 +27,21 @@ export const AutoGenerationPanel = ({ url, content }: AutoGenerationPanelProps) 
 
   console.log("AutoGenerationPanel rendered with:", { url, content, processingMode, selectedModel });
 
+  // Mock quality metrics (would be replaced with actual analysis)
+  const qualityMetrics = {
+    readability: 92,
+    coherence: 88,
+    relevance: 95,
+    completeness: 87
+  };
+
+  // Mock suggested actions (would be replaced with AI-generated suggestions)
+  const suggestedActions = [
+    { action: "Add more examples", priority: "high" },
+    { action: "Include references", priority: "medium" },
+    { action: "Review technical terms", priority: "low" }
+  ];
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -36,7 +51,61 @@ export const AutoGenerationPanel = ({ url, content }: AutoGenerationPanelProps) 
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* AI Processing Status */}
+        {/* Content Summary */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <FileText className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm font-medium">Content Summary</span>
+          </div>
+          <ScrollArea className="h-24 rounded-md border p-2">
+            <p className="text-sm text-muted-foreground">
+              {content?.substring(0, 200)}...
+            </p>
+          </ScrollArea>
+        </div>
+
+        {/* Quality Metrics */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <BarChart2 className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm font-medium">Quality Metrics</span>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            {Object.entries(qualityMetrics).map(([metric, value]) => (
+              <div key={metric} className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="capitalize text-muted-foreground">{metric}</span>
+                  <span>{value}%</span>
+                </div>
+                <Progress value={value} className="h-2" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Suggested Actions */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm font-medium">Suggested Actions</span>
+          </div>
+          <div className="space-y-2">
+            {suggestedActions.map((action, index) => (
+              <div key={index} className="flex items-center justify-between">
+                <span className="text-sm">{action.action}</span>
+                <Badge variant={
+                  action.priority === "high" ? "destructive" :
+                  action.priority === "medium" ? "secondary" :
+                  "outline"
+                }>
+                  {action.priority}
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Processing Status */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">Processing Status</span>
@@ -70,7 +139,7 @@ export const AutoGenerationPanel = ({ url, content }: AutoGenerationPanelProps) 
           </Select>
         </div>
 
-        {/* Processing Mode Toggle */}
+        {/* Processing Mode */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Processing Mode</label>
           <Select value={processingMode} onValueChange={setProcessingMode}>
