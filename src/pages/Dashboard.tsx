@@ -4,6 +4,7 @@ import { ContentGrid } from "@/components/content/ContentGrid";
 import { ViewToggle } from "@/components/content/ViewToggle";
 import { OrganizationTools } from "@/components/organization/OrganizationTools";
 import { SearchPanel } from "@/components/search/SearchPanel";
+import { AutoGenerationPanel } from "@/components/auto-generation/AutoGenerationPanel";
 import { useState } from "react";
 
 const Dashboard = () => {
@@ -11,7 +12,6 @@ const Dashboard = () => {
 
   return (
     <div className="h-full w-full">
-      {/* Top Bar */}
       <div className="flex items-center justify-between p-4 border-b">
         <div className="flex-1 max-w-3xl">
           <SearchPanel />
@@ -24,12 +24,16 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Organization Tools */}
-      <OrganizationTools />
-
-      {/* Main Content */}
-      <div className="p-4">
-        <ContentGrid viewMode={viewMode} />
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 p-4">
+        <div className="lg:col-span-3">
+          <OrganizationTools />
+          <div className="mt-4">
+            <ContentGrid viewMode={viewMode} />
+          </div>
+        </div>
+        <div className="lg:col-span-1">
+          <AutoGenerationPanel />
+        </div>
       </div>
     </div>
   );
