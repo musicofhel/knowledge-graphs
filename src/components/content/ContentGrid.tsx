@@ -10,6 +10,13 @@ const MOCK_ITEMS = [
     template: "Tutorial",
     updatedAt: "2 days ago",
     readProgress: 75,
+    lastAccessed: "1 hour ago",
+    relatedCount: 5,
+    metadata: {
+      author: "React Team",
+      publishDate: "March 1, 2024",
+      readTime: "15 min",
+    },
   },
   {
     id: 2,
@@ -20,6 +27,13 @@ const MOCK_ITEMS = [
     template: "Article",
     updatedAt: "1 week ago",
     readProgress: 30,
+    lastAccessed: "3 days ago",
+    relatedCount: 8,
+    metadata: {
+      author: "TS Community",
+      publishDate: "February 28, 2024",
+      readTime: "25 min",
+    },
   },
   {
     id: 3,
@@ -30,6 +44,13 @@ const MOCK_ITEMS = [
     template: "Research",
     updatedAt: "3 days ago",
     readProgress: 100,
+    lastAccessed: "2 days ago",
+    relatedCount: 3,
+    metadata: {
+      author: "CSS Working Group",
+      publishDate: "March 5, 2024",
+      readTime: "20 min",
+    },
   },
 ];
 
@@ -57,6 +78,9 @@ export const ContentGrid = ({ viewMode }: ContentGridProps) => {
           template={item.template}
           updatedAt={item.updatedAt}
           readProgress={item.readProgress}
+          lastAccessed={item.lastAccessed}
+          relatedCount={item.relatedCount}
+          metadata={item.metadata}
         />
       ))}
     </div>

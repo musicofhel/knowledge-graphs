@@ -4,22 +4,14 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { 
   CalendarDays, 
-  Link as LinkIcon, 
-  Edit, 
-  Trash, 
-  Share, 
-  Bookmark,
-  Eye,
-  BookmarkPlus,
-  MoreHorizontal
+  Link as LinkIcon,
+  Edit,
+  FileText,
+  Share,
+  Trash,
+  Network,
+  Clock
 } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 interface ContentCardProps {
@@ -31,6 +23,13 @@ interface ContentCardProps {
   updatedAt: string;
   imageUrl?: string;
   readProgress?: number;
+  lastAccessed?: string;
+  relatedCount?: number;
+  metadata?: {
+    author?: string;
+    publishDate?: string;
+    readTime?: string;
+  };
 }
 
 export const ContentCard = ({
@@ -42,6 +41,9 @@ export const ContentCard = ({
   updatedAt,
   imageUrl,
   readProgress = 0,
+  lastAccessed,
+  relatedCount = 0,
+  metadata,
 }: ContentCardProps) => {
   const getTemplateColor = (type: string) => {
     switch (type.toLowerCase()) {
@@ -56,8 +58,12 @@ export const ContentCard = ({
     }
   };
 
-  const handleBookmark = () => {
-    toast.success("Content saved to bookmarks");
+  const handleEditTags = () => {
+    toast.success("Edit tags mode enabled");
+  };
+
+  const handleChangeTemplate = () => {
+    toast.success("Template selection opened");
   };
 
   const handleShare = () => {
@@ -69,13 +75,13 @@ export const ContentCard = ({
   };
 
   return (
-    <Card className="group hover:shadow-lg transition-all duration-200 hover:scale-[1.02]">
+    <Card className="group hover:shadow-lg transition-all duration-200">
       <CardHeader>
         <div className="flex justify-between items-start gap-4">
           <CardTitle className="text-lg">{title}</CardTitle>
           <Badge 
             variant="outline" 
-            className={cn("transition-colors", getTemplateColor(template))}
+            className={getTemplateColor(template)}
           >
             {template}
           </Badge>
@@ -91,6 +97,22 @@ export const ContentCard = ({
             />
           </div>
         )}
+        
+        {/* Metadata Preview */}
+        {metadata && (
+          <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
+            {metadata.author && (
+              <div>Author: {metadata.author}</div>
+            )}
+            {metadata.publishDate && (
+              <div>Published: {metadata.publishDate}</div>
+            )}
+            {metadata.readTime && (
+              <div>Read time: {metadata.readTime}</div>
+            )}
+          </div>
+        )}
+
         {url && (
           <a
             href={url}
@@ -102,6 +124,7 @@ export const ContentCard = ({
             {url}
           </a>
         )}
+
         <div className="flex gap-2 flex-wrap">
           {tags.map((tag) => (
             <Badge 
@@ -113,21 +136,37 @@ export const ContentCard = ({
             </Badge>
           ))}
         </div>
+
+        {/* Connection Strength */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>Connection Strength</span>
             <span>{strength}%</span>
           </div>
-          <Progress value={strength} />
+          <Progress value={strength} className="h-2" />
         </div>
+
+        {/* Related Content Count */}
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Network className="h-4 w-4" />
+          <span>{relatedCount} related items</span>
+        </div>
+
+        {/* Last Accessed */}
+        {lastAccessed && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Clock className="h-4 w-4" />
+            <span>Last accessed: {lastAccessed}</span>
+          </div>
+        )}
+
         {readProgress > 0 && (
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Eye className="h-4 w-4" />
+            <div className="flex justify-between text-sm text-muted-foreground">
               <span>Read Progress</span>
-              <span className="ml-auto">{readProgress}%</span>
+              <span>{readProgress}%</span>
             </div>
-            <Progress value={readProgress} className="bg-secondary" />
+            <Progress value={readProgress} className="h-2" />
           </div>
         )}
       </CardContent>
@@ -136,37 +175,41 @@ export const ContentCard = ({
           <CalendarDays className="h-4 w-4" />
           <span>Updated {updatedAt}</span>
         </div>
+        
+        {/* Quick Action Buttons */}
         <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => toast.success("Edit mode enabled")}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={handleEditTags}
+          >
             <Edit className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleShare}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={handleChangeTemplate}
+          >
+            <FileText className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={handleShare}
+          >
             <Share className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleBookmark}>
-            <BookmarkPlus className="h-4 w-4" />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 hover:text-destructive"
+            onClick={handleDelete}
+          >
+            <Trash className="h-4 w-4" />
           </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={handleBookmark}>
-                <Bookmark className="mr-2 h-4 w-4" />
-                Save to Collection
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleShare}>
-                <Share className="mr-2 h-4 w-4" />
-                Share Link
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleDelete} className="text-destructive">
-                <Trash className="mr-2 h-4 w-4" />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </CardFooter>
     </Card>
