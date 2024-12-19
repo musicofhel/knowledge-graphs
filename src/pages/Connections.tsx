@@ -4,7 +4,7 @@ import { GraphDisplay } from "@/components/connections/GraphDisplay";
 import { GraphControls } from "@/components/connections/GraphControls";
 import { NodePanel } from "@/components/connections/NodePanel";
 import { ConnectionDisplay } from "@/components/connections/ConnectionDisplay";
-import { ConnectionManager } from "@/components/connections/ConnectionManager";
+import { PatternRecognitionPanel } from "@/components/patterns/PatternRecognitionPanel";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tabs,
@@ -35,6 +35,7 @@ const MOCK_CONNECTIONS = [
 const Connections = () => {
   const [selectedNode, setSelectedNode] = useState<any>(null);
   const [isLoading] = useState(false);
+  const [showPatterns, setShowPatterns] = useState(false);
 
   const handleConnectionToggle = (id: number, enabled: boolean) => {
     console.log(`Connection ${id} ${enabled ? 'enabled' : 'disabled'}`);
@@ -48,6 +49,9 @@ const Connections = () => {
           <TabsList>
             <TabsTrigger value="graph">Graph View</TabsTrigger>
             <TabsTrigger value="manage">Manage Connections</TabsTrigger>
+            <TabsTrigger value="patterns" onClick={() => setShowPatterns(true)}>
+              Patterns
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="graph">
             <Card className="h-[calc(100vh-8rem)]">
@@ -60,7 +64,20 @@ const Connections = () => {
           </TabsContent>
           <TabsContent value="manage">
             <Card className="h-[calc(100vh-8rem)] overflow-auto">
-              <ConnectionManager />
+              <ConnectionDisplay
+                id={1}
+                sourceTitle="Example Source"
+                targetTitle="Example Target"
+                connectionType="reference"
+                strength={75}
+                createdAt="1 day ago"
+                onToggle={() => {}}
+              />
+            </Card>
+          </TabsContent>
+          <TabsContent value="patterns">
+            <Card className="h-[calc(100vh-8rem)] overflow-auto">
+              <PatternRecognitionPanel />
             </Card>
           </TabsContent>
         </Tabs>
