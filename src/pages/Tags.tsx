@@ -1,16 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EnhancedTagManager } from "@/components/tags/EnhancedTagManager";
 
 const Tags = () => {
   return (
     <div className="p-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Tag Management</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p>Tag management interface will go here</p>
-        </CardContent>
-      </Card>
+      <EnhancedTagManager />
     </div>
   );
 };
