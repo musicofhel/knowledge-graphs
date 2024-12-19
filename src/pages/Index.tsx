@@ -5,6 +5,15 @@ import { FileHandlingRules } from "@/components/rules/FileHandlingRules";
 import { SystemConfigPanel } from "@/components/system/SystemConfigPanel";
 import { ProcessingControls } from "@/components/processing/ProcessingControls";
 import { SystemIntegrationPanel } from "@/components/system/SystemIntegrationPanel";
+import { ConnectionStrengthVisual } from "@/components/connections/ConnectionStrengthVisual";
+
+// Mock data for demonstration
+const mockHistoryData = [
+  { date: '2024-01', strength: 65 },
+  { date: '2024-02', strength: 72 },
+  { date: '2024-03', strength: 68 },
+  { date: '2024-04', strength: 85 },
+];
 
 const Index = () => {
   return (
@@ -31,6 +40,31 @@ const Index = () => {
           <FileHandlingRules />
           <SystemConfigPanel />
         </div>
+
+        {/* New Connection Strength Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Connection Analysis</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-6 md:grid-cols-2">
+              <ConnectionStrengthVisual
+                connectionType="reference"
+                strength={85}
+                createdAt="2024-03-01"
+                updateFrequency={5}
+                historyData={mockHistoryData}
+              />
+              <ConnectionStrengthVisual
+                connectionType="related"
+                strength={62}
+                createdAt="2024-02-15"
+                updateFrequency={3}
+                historyData={mockHistoryData}
+              />
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
