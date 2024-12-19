@@ -1,7 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { CalendarDays, Link as LinkIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CalendarDays, Link as LinkIcon, Edit, Trash, Share, Bookmark, Eye } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ContentCardProps {
   title: string;
@@ -11,6 +13,7 @@ interface ContentCardProps {
   template: string;
   updatedAt: string;
   imageUrl?: string;
+  readProgress?: number;
 }
 
 export const ContentCard = ({
@@ -21,13 +24,32 @@ export const ContentCard = ({
   template,
   updatedAt,
   imageUrl,
+  readProgress = 0,
 }: ContentCardProps) => {
+  const getTemplateColor = (type: string) => {
+    switch (type.toLowerCase()) {
+      case 'article':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300';
+      case 'tutorial':
+        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
+      case 'research':
+        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300';
+      default:
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
+    }
+  };
+
   return (
-    <Card className="hover:shadow-lg transition-shadow">
+    <Card className="group hover:shadow-lg transition-all duration-200 hover:scale-[1.02]">
       <CardHeader>
         <div className="flex justify-between items-start gap-4">
           <CardTitle className="text-lg">{title}</CardTitle>
-          <Badge variant="outline">{template}</Badge>
+          <Badge 
+            variant="outline" 
+            className={cn("transition-colors", getTemplateColor(template))}
+          >
+            {template}
+          </Badge>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -53,7 +75,11 @@ export const ContentCard = ({
         )}
         <div className="flex gap-2 flex-wrap">
           {tags.map((tag) => (
-            <Badge key={tag} variant="secondary">
+            <Badge 
+              key={tag} 
+              variant="secondary"
+              className="hover:bg-secondary/80 cursor-pointer transition-colors"
+            >
               {tag}
             </Badge>
           ))}
@@ -65,11 +91,37 @@ export const ContentCard = ({
           </div>
           <Progress value={strength} />
         </div>
+        {readProgress > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Eye className="h-4 w-4" />
+              <span>Read Progress</span>
+              <span className="ml-auto">{readProgress}%</span>
+            </div>
+            <Progress value={readProgress} className="bg-secondary" />
+          </div>
+        )}
+      </CardContent>
+      <CardFooter className="flex justify-between items-center pt-4">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <CalendarDays className="h-4 w-4" />
           <span>Updated {updatedAt}</span>
         </div>
-      </CardContent>
+        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Edit className="h-4 w-4" />
+          </Button>
+          <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Share className="h-4 w-4" />
+          </Button>
+          <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Bookmark className="h-4 w-4" />
+          </Button>
+          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive">
+            <Trash className="h-4 w-4" />
+          </Button>
+        </div>
+      </CardFooter>
     </Card>
   );
 };

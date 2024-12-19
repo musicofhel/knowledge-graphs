@@ -7,8 +7,9 @@ const MOCK_ITEMS = [
     url: "https://react.dev",
     tags: ["react", "tutorial", "frontend"],
     strength: 85,
-    template: "Article",
+    template: "Tutorial",
     updatedAt: "2 days ago",
+    readProgress: 75,
   },
   {
     id: 2,
@@ -16,8 +17,9 @@ const MOCK_ITEMS = [
     url: "https://typescript-patterns.dev",
     tags: ["typescript", "advanced", "patterns"],
     strength: 92,
-    template: "Research",
+    template: "Article",
     updatedAt: "1 week ago",
+    readProgress: 30,
   },
   {
     id: 3,
@@ -25,8 +27,9 @@ const MOCK_ITEMS = [
     imageUrl: "/placeholder.svg",
     tags: ["css", "layout", "web"],
     strength: 78,
-    template: "Tutorial",
+    template: "Research",
     updatedAt: "3 days ago",
+    readProgress: 100,
   },
 ];
 
@@ -53,6 +56,7 @@ export const ContentGrid = ({ viewMode }: ContentGridProps) => {
           strength={item.strength}
           template={item.template}
           updatedAt={item.updatedAt}
+          readProgress={item.readProgress}
         />
       ))}
     </div>
