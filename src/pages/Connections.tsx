@@ -6,6 +6,7 @@ import { NodePanel } from "@/components/connections/NodePanel";
 import { ConnectionDisplay } from "@/components/connections/ConnectionDisplay";
 import { PatternRecognitionPanel } from "@/components/patterns/PatternRecognitionPanel";
 import { BehaviorMetrics } from "@/components/connections/tracking/BehaviorMetrics";
+import { PatternVisualization } from "@/components/patterns/visualization/PatternVisualization";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tabs,
@@ -70,6 +71,7 @@ const Connections = () => {
               Patterns
             </TabsTrigger>
             <TabsTrigger value="behavior">Behavior</TabsTrigger>
+            <TabsTrigger value="visualization">Visualization</TabsTrigger>
           </TabsList>
           <TabsContent value="graph">
             <Card className="h-[calc(100vh-8rem)]">
@@ -99,6 +101,11 @@ const Connections = () => {
           <TabsContent value="behavior">
             <Card className="h-[calc(100vh-8rem)] overflow-auto">
               <BehaviorMetrics />
+            </Card>
+          </TabsContent>
+          <TabsContent value="visualization">
+            <Card className="h-[calc(100vh-8rem)] overflow-auto">
+              <PatternVisualization />
             </Card>
           </TabsContent>
         </Tabs>
