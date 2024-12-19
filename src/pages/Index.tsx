@@ -3,6 +3,7 @@ import { SystemStatusPanel } from "@/components/system/SystemStatusPanel";
 import { FileSystemMonitor } from "@/components/monitoring/FileSystemMonitor";
 import { FileHandlingRules } from "@/components/rules/FileHandlingRules";
 import { SystemConfigPanel } from "@/components/system/SystemConfigPanel";
+import { ProcessingControls } from "@/components/processing/ProcessingControls";
 
 const Index = () => {
   return (
@@ -15,13 +16,17 @@ const Index = () => {
           <CardContent>
             <div className="grid gap-6 md:grid-cols-2">
               <SystemStatusPanel />
-              <FileSystemMonitor />
+              <ProcessingControls />
             </div>
           </CardContent>
         </Card>
 
+        <div className="grid gap-6 md:grid-cols-2">
+          <FileSystemMonitor />
+          <FileHandlingRules />
+        </div>
+
         <SystemConfigPanel />
-        <FileHandlingRules />
       </div>
     </div>
   );
