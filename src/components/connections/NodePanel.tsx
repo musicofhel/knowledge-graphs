@@ -6,7 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Eye, Share, Bookmark } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Eye, Share, Bookmark, Clock, Network } from "lucide-react";
 import { Node } from "reactflow";
 
 interface NodePanelProps {
@@ -51,16 +52,40 @@ export const NodePanel = ({ selectedNode }: NodePanelProps) => {
             </Button>
           </div>
 
-          {/* Connected Nodes */}
+          {/* Related Content */}
           <div>
-            <h4 className="font-medium mb-2">Connected Content</h4>
+            <h4 className="font-medium mb-2">Related Content</h4>
             <div className="space-y-2">
-              {["Node 1", "Node 2", "Node 3"].map((node) => (
+              {["React Hooks Guide", "State Management", "Component Patterns"].map((content) => (
                 <div
-                  key={node}
-                  className="p-2 bg-secondary rounded-md text-sm"
+                  key={content}
+                  className="p-2 bg-secondary rounded-md text-sm flex items-center justify-between"
                 >
-                  {node}
+                  <span>{content}</span>
+                  <Network className="h-4 w-4 text-muted-foreground" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Time-based Connections */}
+          <div>
+            <h4 className="font-medium mb-2">Recent Connections</h4>
+            <div className="space-y-2">
+              {[
+                { node: "TypeScript Basics", time: "2 hours ago" },
+                { node: "React Router", time: "1 day ago" },
+                { node: "Redux Tutorial", time: "3 days ago" },
+              ].map((connection) => (
+                <div
+                  key={connection.node}
+                  className="flex items-center justify-between text-sm"
+                >
+                  <span>{connection.node}</span>
+                  <div className="flex items-center text-muted-foreground">
+                    <Clock className="mr-1 h-4 w-4" />
+                    <span>{connection.time}</span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -69,19 +94,20 @@ export const NodePanel = ({ selectedNode }: NodePanelProps) => {
           {/* Connection Strengths */}
           <div>
             <h4 className="font-medium mb-2">Connection Strengths</h4>
-            <div className="space-y-1 text-sm">
-              <div className="flex justify-between">
-                <span>Node 1</span>
-                <span>85%</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Node 2</span>
-                <span>72%</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Node 3</span>
-                <span>91%</span>
-              </div>
+            <div className="space-y-2">
+              {[
+                { node: "React Basics", strength: 85 },
+                { node: "JavaScript", strength: 72 },
+                { node: "Web Development", strength: 91 },
+              ].map((connection) => (
+                <div key={connection.node} className="space-y-1">
+                  <div className="flex justify-between text-sm">
+                    <span>{connection.node}</span>
+                    <span>{connection.strength}%</span>
+                  </div>
+                  <Progress value={connection.strength} className="h-1" />
+                </div>
+              ))}
             </div>
           </div>
         </div>

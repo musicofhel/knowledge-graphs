@@ -3,11 +3,35 @@ import { Card } from "@/components/ui/card";
 import { GraphDisplay } from "@/components/connections/GraphDisplay";
 import { GraphControls } from "@/components/connections/GraphControls";
 import { NodePanel } from "@/components/connections/NodePanel";
+import { ConnectionDisplay } from "@/components/connections/ConnectionDisplay";
 import { Skeleton } from "@/components/ui/skeleton";
+
+const MOCK_CONNECTIONS = [
+  {
+    id: 1,
+    sourceTitle: "React Basics",
+    targetTitle: "Advanced React Patterns",
+    connectionType: "reference",
+    strength: 85,
+    createdAt: "2 days ago",
+  },
+  {
+    id: 2,
+    sourceTitle: "TypeScript Guide",
+    targetTitle: "React with TypeScript",
+    connectionType: "related",
+    strength: 92,
+    createdAt: "1 week ago",
+  },
+];
 
 const Connections = () => {
   const [selectedNode, setSelectedNode] = useState<any>(null);
   const [isLoading] = useState(false);
+
+  const handleConnectionToggle = (id: number, enabled: boolean) => {
+    console.log(`Connection ${id} ${enabled ? 'enabled' : 'disabled'}`);
+  };
 
   return (
     <div className="h-screen flex">
@@ -29,6 +53,17 @@ const Connections = () => {
         </div>
         <div className="p-4">
           <NodePanel selectedNode={selectedNode} />
+        </div>
+        
+        {/* Connections List */}
+        <div className="p-4 border-t space-y-4">
+          {MOCK_CONNECTIONS.map((connection) => (
+            <ConnectionDisplay
+              key={connection.id}
+              {...connection}
+              onToggle={(enabled) => handleConnectionToggle(connection.id, enabled)}
+            />
+          ))}
         </div>
       </div>
     </div>
