@@ -11,6 +11,7 @@ import { ContentClusters } from "@/components/visualization/ContentClusters";
 import { SystemStatusPanel } from "@/components/system/SystemStatusPanel";
 import { FileSystemStructure } from "@/components/filesystem/FileSystemStructure";
 import { FileOperations } from "@/components/filing/operations/FileOperations";
+import { FileSystemMonitor } from "@/components/monitoring/FileSystemMonitor";
 import { useState } from "react";
 
 const Dashboard = () => {
@@ -53,6 +54,7 @@ const Dashboard = () => {
           <FileSystemStructure />
           <SystemStatusPanel />
           <FileOperations />
+          <FileSystemMonitor />
         </div>
         <div className="lg:col-span-6">
           <div className="mb-4">
