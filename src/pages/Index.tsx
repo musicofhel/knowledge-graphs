@@ -12,6 +12,7 @@ import { LanguageProcessingDisplay } from "@/components/analysis/LanguageProcess
 import { ContentEvolution } from "@/components/content/ContentEvolution";
 import { SystemLearningPanel } from "@/components/system/SystemLearningPanel";
 import { ContentInteractionPanel } from "@/components/content/ContentInteractionPanel";
+import { OriginTracker } from "@/components/tracking/OriginTracker";
 
 // Mock data for demonstration
 const mockHistoryData = [
@@ -45,7 +46,7 @@ const Index = () => {
 
         <div className="grid gap-6 md:grid-cols-2">
           <SystemLearningPanel />
-          <SystemStatusPanel />
+          <OriginTracker />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
