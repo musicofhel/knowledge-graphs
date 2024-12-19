@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { UserPreferencesPanel } from "@/components/preferences/UserPreferencesPanel";
 import { SystemStatusPanel } from "@/components/system/SystemStatusPanel";
 import { FileSystemMonitor } from "@/components/monitoring/FileSystemMonitor";
 import { FileHandlingRules } from "@/components/rules/FileHandlingRules";
+import { SystemConfigPanel } from "@/components/system/SystemConfigPanel";
 
 const Index = () => {
   return (
@@ -20,16 +20,8 @@ const Index = () => {
           </CardContent>
         </Card>
 
+        <SystemConfigPanel />
         <FileHandlingRules />
-
-        <Card>
-          <CardHeader>
-            <CardTitle>User Settings</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <UserPreferencesPanel />
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
