@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { 
   Home, Tags, Network, PlusCircle, Sun, Moon, 
@@ -35,7 +35,7 @@ export const AppLayout = () => {
   };
 
   // Add keyboard listener
-  useState(() => {
+  useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
@@ -128,7 +128,7 @@ export const AppLayout = () => {
           </div>
 
           {/* Main Content Area */}
-          <ResizableGroup>
+          <ResizableGroup direction="horizontal">
             <ResizablePanel defaultSize={isSplitView ? 50 : 100}>
               <div className="h-full overflow-auto">
                 <Outlet />
