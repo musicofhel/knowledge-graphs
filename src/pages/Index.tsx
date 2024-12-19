@@ -11,6 +11,7 @@ import { TaskQueueInterface } from "@/components/queue/TaskQueueInterface";
 import { LanguageProcessingDisplay } from "@/components/analysis/LanguageProcessingDisplay";
 import { ContentEvolution } from "@/components/content/ContentEvolution";
 import { SystemLearningPanel } from "@/components/system/SystemLearningPanel";
+import { ContentInteractionPanel } from "@/components/content/ContentInteractionPanel";
 
 // Mock data for demonstration
 const mockHistoryData = [
@@ -24,7 +25,13 @@ const Index = () => {
   return (
     <div className="container mx-auto py-8">
       <div className="grid gap-6">
-        <VisualizationPanel />
+        <div className="grid gap-6 md:grid-cols-2">
+          <ContentInteractionPanel 
+            contentId="mock-content-1"
+            title="Sample Content"
+          />
+          <VisualizationPanel />
+        </div>
         
         <div className="grid gap-6 md:grid-cols-2">
           <TaskQueueInterface />
