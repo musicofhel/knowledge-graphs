@@ -79,17 +79,15 @@ export const QuickTagSelector = ({
       <div className="space-y-2">
         <label className="text-xs text-muted-foreground">Suggested Tags</label>
         <div className="flex flex-wrap gap-2">
-          {SUGGESTED_TAGS.filter((tag) => !selectedTags.includes(tag)).map(
-            (tag) => (
-              <Badge
-                key={tag}
-                variant="outline"
-                className="cursor-pointer hover:bg-secondary"
-                onClick={() => addTag(tag)}
-              >
-                {tag}
-              </Badge>
-            )
+          {SUGGESTED_TAGS.filter((tag) => !selectedTags.includes(tag)).map((tag) => (
+            <Badge
+              key={tag}
+              variant="outline"
+              className="cursor-pointer hover:bg-secondary"
+              onClick={() => addTag(tag)}
+            >
+              {tag}
+            </Badge>
           ))}
         </div>
       </div>
