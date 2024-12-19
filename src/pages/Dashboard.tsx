@@ -4,6 +4,7 @@ import { ContentGrid } from "@/components/content/ContentGrid";
 import { OrganizationTools } from "@/components/organization/OrganizationTools";
 import { SearchPanel } from "@/components/search/SearchPanel";
 import { AutoGenerationPanel } from "@/components/auto-generation/AutoGenerationPanel";
+import { ClassificationPanel } from "@/components/auto-generation/ClassificationPanel";
 import { FolderStructure } from "@/components/organization/FolderStructure";
 import { SmartCollections } from "@/components/organization/SmartCollections";
 import { ViewOptions } from "@/components/visualization/ViewOptions";
@@ -63,8 +64,9 @@ const Dashboard = () => {
           <OrganizationTools />
           <div className="mt-4">{renderContent()}</div>
         </div>
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 space-y-4">
           <AutoGenerationPanel />
+          <ClassificationPanel />
         </div>
       </div>
     </div>
