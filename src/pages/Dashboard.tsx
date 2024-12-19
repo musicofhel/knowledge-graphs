@@ -4,8 +4,11 @@ import { Plus, Search } from "lucide-react";
 import { ContentGrid } from "@/components/content/ContentGrid";
 import { ViewToggle } from "@/components/content/ViewToggle";
 import { SortSelect } from "@/components/content/SortSelect";
+import { useState } from "react";
 
 const Dashboard = () => {
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
   return (
     <div className="h-full w-full">
       {/* Top Bar */}
@@ -15,7 +18,7 @@ const Dashboard = () => {
           <Input type="text" placeholder="Search content..." className="flex-1" />
         </div>
         <div className="flex items-center gap-4">
-          <ViewToggle />
+          <ViewToggle onViewChange={setViewMode} />
           <SortSelect />
           <Button>
             <Plus className="mr-2 h-4 w-4" /> Add New
@@ -25,7 +28,7 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className="p-4">
-        <ContentGrid />
+        <ContentGrid viewMode={viewMode} />
       </div>
     </div>
   );

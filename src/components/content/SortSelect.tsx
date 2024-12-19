@@ -9,13 +9,13 @@ import {
 export const SortSelect = () => {
   return (
     <Select defaultValue="date">
-      <SelectTrigger className="w-[140px]">
+      <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="date">Date Added</SelectItem>
-        <SelectItem value="name">Name</SelectItem>
-        <SelectItem value="relevance">Relevance</SelectItem>
+        <SelectItem value="strength">Connection Strength</SelectItem>
+        <SelectItem value="type">Template Type</SelectItem>
       </SelectContent>
     </Select>
   );
