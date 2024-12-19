@@ -1,8 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Minus } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 interface RuleCondition {
   type: string;
@@ -19,39 +17,20 @@ export const RuleConditionBuilder = ({
   conditions,
   onChange,
 }: RuleConditionBuilderProps) => {
-  const addCondition = () => {
-    onChange([...conditions, { type: "name", operator: "contains", value: "" }]);
-  };
-
-  const removeCondition = (index: number) => {
-    onChange(conditions.filter((_, i) => i !== index));
-  };
-
-  const updateCondition = (index: number, updates: Partial<RuleCondition>) => {
-    onChange(
-      conditions.map((condition, i) =>
-        i === index ? { ...condition, ...updates } : condition
-      )
-    );
-  };
-
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <Label>Conditions</Label>
-        <Button onClick={addCondition} variant="outline" size="sm">
-          <Plus className="h-4 w-4 mr-2" />
-          Add Condition
-        </Button>
-      </div>
-
+      <Label>Conditions</Label>
       <div className="space-y-2">
         {conditions.map((condition, index) => (
           <div key={index} className="flex items-center gap-2">
             <Select
               value={condition.type}
               onValueChange={(value) =>
-                updateCondition(index, { type: value })
+                onChange(
+                  conditions.map((c, i) =>
+                    i === index ? { ...c, type: value } : c
+                  )
+                )
               }
             >
               <SelectTrigger className="w-[120px]">
@@ -68,7 +47,11 @@ export const RuleConditionBuilder = ({
             <Select
               value={condition.operator}
               onValueChange={(value) =>
-                updateCondition(index, { operator: value })
+                onChange(
+                  conditions.map((c, i) =>
+                    i === index ? { ...c, operator: value } : c
+                  )
+                )
               }
             >
               <SelectTrigger className="w-[120px]">
@@ -85,19 +68,15 @@ export const RuleConditionBuilder = ({
             <Input
               value={condition.value}
               onChange={(e) =>
-                updateCondition(index, { value: e.target.value })
+                onChange(
+                  conditions.map((c, i) =>
+                    i === index ? { ...c, value: e.target.value } : c
+                  )
+                )
               }
               placeholder="Value"
               className="flex-1"
             />
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => removeCondition(index)}
-            >
-              <Minus className="h-4 w-4" />
-            </Button>
           </div>
         ))}
       </div>
