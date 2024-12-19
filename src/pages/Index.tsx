@@ -6,6 +6,7 @@ import { SystemConfigPanel } from "@/components/system/SystemConfigPanel";
 import { ProcessingControls } from "@/components/processing/ProcessingControls";
 import { SystemIntegrationPanel } from "@/components/system/SystemIntegrationPanel";
 import { ConnectionStrengthVisual } from "@/components/connections/ConnectionStrengthVisual";
+import { VisualizationPanel } from "@/components/visualization/VisualizationPanel";
 
 // Mock data for demonstration
 const mockHistoryData = [
@@ -19,6 +20,9 @@ const Index = () => {
   return (
     <div className="container mx-auto py-8">
       <div className="grid gap-6">
+        {/* Add Visualization Panel at the top */}
+        <VisualizationPanel />
+
         <Card>
           <CardHeader>
             <CardTitle>System Overview</CardTitle>
@@ -41,7 +45,6 @@ const Index = () => {
           <SystemConfigPanel />
         </div>
 
-        {/* New Connection Strength Section */}
         <Card>
           <CardHeader>
             <CardTitle>Connection Analysis</CardTitle>
