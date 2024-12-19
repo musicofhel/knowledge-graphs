@@ -1,16 +1,36 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { ContentGrid } from "@/components/content/ContentGrid";
-import { ViewToggle } from "@/components/content/ViewToggle";
 import { OrganizationTools } from "@/components/organization/OrganizationTools";
 import { SearchPanel } from "@/components/search/SearchPanel";
 import { AutoGenerationPanel } from "@/components/auto-generation/AutoGenerationPanel";
 import { FolderStructure } from "@/components/organization/FolderStructure";
 import { SmartCollections } from "@/components/organization/SmartCollections";
+import { ViewOptions } from "@/components/visualization/ViewOptions";
+import { ContentClusters } from "@/components/visualization/ContentClusters";
 import { useState } from "react";
 
 const Dashboard = () => {
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, setViewMode] = useState<string>("grid");
+
+  const renderContent = () => {
+    switch (viewMode) {
+      case "grid":
+      case "list":
+        return <ContentGrid viewMode={viewMode as "grid" | "list"} />;
+      case "clusters":
+        return <ContentClusters />;
+      case "relationships":
+      case "timeline":
+        return (
+          <div className="flex items-center justify-center h-[500px] text-muted-foreground">
+            {viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} view coming soon
+          </div>
+        );
+      default:
+        return <ContentGrid viewMode="grid" />;
+    }
+  };
 
   return (
     <div className="h-full w-full">
@@ -19,7 +39,6 @@ const Dashboard = () => {
           <SearchPanel />
         </div>
         <div className="flex items-center gap-4 ml-4">
-          <ViewToggle onViewChange={setViewMode} />
           <Button>
             <Plus className="mr-2 h-4 w-4" /> Add New
           </Button>
@@ -38,9 +57,12 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="lg:col-span-6">
+          <div className="mb-4">
+            <ViewOptions currentView={viewMode} onViewChange={setViewMode} />
+          </div>
           <OrganizationTools />
           <div className="mt-4">
-            <ContentGrid viewMode={viewMode} />
+            {renderContent()}
           </div>
         </div>
         <div className="lg:col-span-3">
