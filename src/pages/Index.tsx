@@ -1,11 +1,32 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserPreferencesPanel } from "@/components/preferences/UserPreferencesPanel";
+import { SystemStatusPanel } from "@/components/system/SystemStatusPanel";
+import { FileSystemMonitor } from "@/components/monitoring/FileSystemMonitor";
 
 const Index = () => {
   return (
     <div className="container mx-auto py-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">User Preferences</h1>
-        <UserPreferencesPanel />
+      <div className="grid gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>System Overview</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-6 md:grid-cols-2">
+              <SystemStatusPanel />
+              <FileSystemMonitor />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>User Settings</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <UserPreferencesPanel />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
