@@ -9,6 +9,7 @@ import { ConnectionStrengthVisual } from "@/components/connections/ConnectionStr
 import { VisualizationPanel } from "@/components/visualization/VisualizationPanel";
 import { TaskQueueInterface } from "@/components/queue/TaskQueueInterface";
 import { LanguageProcessingDisplay } from "@/components/analysis/LanguageProcessingDisplay";
+import { ContentEvolution } from "@/components/content/ContentEvolution";
 
 // Mock data for demonstration
 const mockHistoryData = [
@@ -31,6 +32,10 @@ const Index = () => {
 
         <div className="grid gap-6 md:grid-cols-2">
           <LanguageProcessingDisplay />
+          <ContentEvolution />
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
           <Card>
             <CardHeader>
               <CardTitle>System Overview</CardTitle>
