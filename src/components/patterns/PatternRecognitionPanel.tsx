@@ -4,18 +4,23 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { 
-  Clock, 
-  Activity, 
-  Route, 
-  Timer, 
-  CheckSquare, 
+  Activity,
   AlertTriangle,
-  Repeat,
-  Link,
   ArrowRightLeft,
-  Search,
+  CheckSquare,
+  Clock,
+  Link,
   LogIn,
-  LogOut
+  LogOut,
+  Repeat,
+  Route,
+  Search,
+  Timer,
+  ThumbsUp,
+  AlertCircle,
+  XCircle,
+  RefreshCcw,
+  Gauge
 } from "lucide-react";
 
 const mockTimeData = [
@@ -35,18 +40,148 @@ const mockRevisitData = [
   { day: 'Fri', revisits: 20 },
 ];
 
+const mockEngagementData = [
+  { day: 'Mon', depth: 4.2 },
+  { day: 'Tue', depth: 3.8 },
+  { day: 'Wed', depth: 5.1 },
+  { day: 'Thu', depth: 4.7 },
+  { day: 'Fri', depth: 4.9 },
+];
+
 export const PatternRecognitionPanel = () => {
   return (
     <Card className="h-full">
       <CardHeader>
         <CardTitle className="text-lg font-medium flex items-center gap-2">
           <Activity className="h-5 w-5" />
-          Access Patterns Analysis
+          Access Patterns & Metrics
         </CardTitle>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[calc(100vh-20rem)] pr-4">
           <div className="space-y-6">
+            {/* Success Indicators */}
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium flex items-center gap-2">
+                <ThumbsUp className="h-4 w-4" />
+                Success Metrics
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-3 bg-secondary rounded-lg">
+                  <div className="text-sm text-muted-foreground">Task Success</div>
+                  <div className="text-2xl font-bold text-green-500">87%</div>
+                </div>
+                <div className="p-3 bg-secondary rounded-lg">
+                  <div className="text-sm text-muted-foreground">Goal Completion</div>
+                  <div className="text-2xl font-bold text-green-500">92%</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Friction Points */}
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium flex items-center gap-2">
+                <AlertCircle className="h-4 w-4" />
+                Friction Analysis
+              </h3>
+              <div className="space-y-2">
+                {['Navigation Delays', 'Search Refinements', 'Error Encounters'].map((point) => (
+                  <div key={point} className="flex items-center justify-between">
+                    <span className="text-sm">{point}</span>
+                    <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
+                      {Math.floor(Math.random() * 10 + 1)} points
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Abandonment Markers */}
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium flex items-center gap-2">
+                <XCircle className="h-4 w-4" />
+                Abandonment Analysis
+              </h3>
+              <div className="space-y-1">
+                <div className="flex justify-between text-sm">
+                  <span>Exit Rate</span>
+                  <span className="text-red-500">15%</span>
+                </div>
+                <Progress value={15} className="h-2" />
+                <div className="flex justify-between text-sm mt-2">
+                  <span>Task Abandonment</span>
+                  <span className="text-red-500">8%</span>
+                </div>
+                <Progress value={8} className="h-2" />
+              </div>
+            </div>
+
+            {/* Completion Rates */}
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium flex items-center gap-2">
+                <CheckSquare className="h-4 w-4" />
+                Completion Analysis
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-3 bg-secondary rounded-lg">
+                  <div className="text-sm text-muted-foreground">Flow Complete</div>
+                  <div className="text-2xl font-bold">85%</div>
+                </div>
+                <div className="p-3 bg-secondary rounded-lg">
+                  <div className="text-sm text-muted-foreground">Path Success</div>
+                  <div className="text-2xl font-bold">78%</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Return Triggers */}
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium flex items-center gap-2">
+                <RefreshCcw className="h-4 w-4" />
+                Return Patterns
+              </h3>
+              <div className="space-y-2">
+                {[
+                  { trigger: 'Content Updates', rate: '45%' },
+                  { trigger: 'Related Items', rate: '32%' },
+                  { trigger: 'Notifications', rate: '23%' }
+                ].map((item) => (
+                  <div key={item.trigger} className="flex items-center justify-between">
+                    <span className="text-sm">{item.trigger}</span>
+                    <Badge variant="secondary">{item.rate}</Badge>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Engagement Depth */}
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium flex items-center gap-2">
+                <Gauge className="h-4 w-4" />
+                Engagement Depth
+              </h3>
+              <div className="h-40">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={mockEngagementData}>
+                    <XAxis dataKey="day" stroke="currentColor" strokeOpacity={0.5} />
+                    <YAxis stroke="currentColor" strokeOpacity={0.5} />
+                    <Tooltip />
+                    <Line 
+                      type="monotone" 
+                      dataKey="depth" 
+                      stroke="currentColor" 
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="text-sm text-muted-foreground mt-2">
+                Average interaction depth: 4.5 levels
+              </div>
+            </div>
+
+            {/* Keep existing sections */}
             {/* Content Revisit Cycles */}
             <div className="space-y-2">
               <h3 className="text-sm font-medium flex items-center gap-2">
