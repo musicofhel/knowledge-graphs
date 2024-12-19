@@ -5,6 +5,7 @@ import { CalendarDays, Link as LinkIcon } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
 interface ConnectionDisplayProps {
+  id: number;  // Added this line to fix the TypeScript error
   sourceTitle: string;
   targetTitle: string;
   connectionType: string;
@@ -15,6 +16,7 @@ interface ConnectionDisplayProps {
 }
 
 export const ConnectionDisplay = ({
+  id,  // Added this to the destructuring
   sourceTitle,
   targetTitle,
   connectionType,
