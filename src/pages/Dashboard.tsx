@@ -10,6 +10,7 @@ import { ViewOptions } from "@/components/visualization/ViewOptions";
 import { ContentClusters } from "@/components/visualization/ContentClusters";
 import { SystemStatusPanel } from "@/components/system/SystemStatusPanel";
 import { useState } from "react";
+import { FileSystemStructure } from "@/components/filesystem/FileSystemStructure";
 
 const Dashboard = () => {
   const [viewMode, setViewMode] = useState<string>("grid");
@@ -48,14 +49,7 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-4">
         <div className="lg:col-span-3 space-y-4">
-          <div className="space-y-2">
-            <h3 className="font-medium ml-2">Folders</h3>
-            <FolderStructure />
-          </div>
-          <div className="space-y-2">
-            <h3 className="font-medium ml-2">Smart Collections</h3>
-            <SmartCollections />
-          </div>
+          <FileSystemStructure />
           <SystemStatusPanel />
         </div>
         <div className="lg:col-span-6">
