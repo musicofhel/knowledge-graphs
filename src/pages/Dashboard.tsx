@@ -9,8 +9,9 @@ import { SmartCollections } from "@/components/organization/SmartCollections";
 import { ViewOptions } from "@/components/visualization/ViewOptions";
 import { ContentClusters } from "@/components/visualization/ContentClusters";
 import { SystemStatusPanel } from "@/components/system/SystemStatusPanel";
-import { useState } from "react";
 import { FileSystemStructure } from "@/components/filesystem/FileSystemStructure";
+import { FileOperations } from "@/components/filing/operations/FileOperations";
+import { useState } from "react";
 
 const Dashboard = () => {
   const [viewMode, setViewMode] = useState<string>("grid");
@@ -51,15 +52,14 @@ const Dashboard = () => {
         <div className="lg:col-span-3 space-y-4">
           <FileSystemStructure />
           <SystemStatusPanel />
+          <FileOperations />
         </div>
         <div className="lg:col-span-6">
           <div className="mb-4">
             <ViewOptions currentView={viewMode} onViewChange={setViewMode} />
           </div>
           <OrganizationTools />
-          <div className="mt-4">
-            {renderContent()}
-          </div>
+          <div className="mt-4">{renderContent()}</div>
         </div>
         <div className="lg:col-span-3">
           <AutoGenerationPanel />
